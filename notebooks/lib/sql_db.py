@@ -50,5 +50,5 @@ class ToSQL:
             
     def show_df(self):
         data=self.motor.execute(DDL(f'select * from {self.schema}.{self.Table.__tablename__}')).fetchall()
-        #columns=self.motor.execute(DDL(f"select * from {self.schema}.information_schema.columns where table_name={self.Table.__tablename__}")).fetchall()
-        return pd.DataFrame(data)
+        columns=self.motor.execute(DDL(f"select * from {self.schema}.information_schema.columns where table_name='{self.Table.__tablename__}'")).fetchall()
+        return pd.DataFrame(data, columns=[e[3] for e in columns])
